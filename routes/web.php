@@ -10,15 +10,10 @@ Route::get('/', function () {
 });
 
 // authentication routes
-
-/*----------------------Register---------------------*/
 Route::get('/register', [RegisterController::class, 'show'])->name('register');
 Route::post('/register', [RegisterController::class, 'create'])->name('register.post');
-/*----------------------End Register---------------------*/
-
-/*----------------------Login---------------------*/
+Route::get('/login', [LoginController::class, 'show'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.post');
-/*----------------------End Login---------------------*/
 
 //admin routes
 Route::get('admin/dashboard', [AdminController::class, 'show'])->name('admin');

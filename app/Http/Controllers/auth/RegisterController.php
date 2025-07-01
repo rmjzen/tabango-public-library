@@ -17,16 +17,24 @@ class RegisterController extends Controller
 
     public function create(Request $request)
     {
+        $validated = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname'  => 'required|string|max:255',
+            'username'  => 'required|string|max:255|unique:users,username',
+            'email'     => 'required|email|max:255|unique:users,email',
+            'phone'     => 'required|regex:/^09\d{9}$/|size:11',
+            'password'  => 'required|string|min:6',
+        ]);
 
-        $create             = new User();
-        $create->firstname  = $request->input('firstname');
-        $create->lastname   = $request->input('lastname');
-        $create->username   = $request->input('username');
-        $create->phone      = $request->input('phone');
-        $create->email      = $request->input('email');
-        $create->password   = Hash::make($request->input('password'));
-        $create->save();
+        $user = new User();
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->username = $request->username;
+        $user->phone = $request->phone;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->save();
 
-        return redirect()->route('register');
+        return response()->json(['success' => true, 'message' => 'Registration successful!']);
     }
 }
