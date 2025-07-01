@@ -8,8 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function show()
+    public function show(Request $request)
     {
+        // Check if the user is already authenticated
+        // if (Auth::check()) {
+        //     return redirect()->route('admin')->with('success', 'You are already logged in.');
+        // }
+
+        // Return the login view
         return view('auth.login');
     }
     public function login(Request $request)
@@ -17,7 +23,7 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            // $request->session()->regenerate();
 
             // Check if it's AJAX
             if ($request->expectsJson()) {
